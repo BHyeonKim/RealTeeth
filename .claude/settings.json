@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git status *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git branch --show-current)",
+      "Bash(git merge-base *)",
+      "Bash(git push *)",
+      "Bash(gh pr *)",
+      "Bash(gh label *)",
+      "Bash(gh repo *)",
+      "Bash(gh api *)",
+      "Bash(rm -rf tmp)",
+      "Bash(CURRENT_USER=*)",
+      "Bash(REPO=*)",
+      "Bash(REVIEWERS=*)",
+      "Bash(.claude/skills/realteeth-pr/scripts/*)"
+    ]
+  },
+  "enabledMcpjsonServers": [
+    "agentation"
+  ],
+}

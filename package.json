@@ -1,0 +1,46 @@
+{
+	"name": "realteeth",
+	"private": true,
+	"type": "module",
+	"packageManager": "pnpm@11.0.8",
+	"engines": {
+		"node": ">=24"
+	},
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc -b && vite build",
+		"lint": "biome check .",
+		"format": "biome check --write .",
+		"preview": "vite preview",
+		"prepare": "husky"
+	},
+	"dependencies": {
+		"@tanstack/react-query": "^5.100.9",
+		"axios": "^1.16.0",
+		"react": "^19.2.6",
+		"react-dom": "^19.2.6",
+		"react-naver-maps": "^0.2.0",
+		"react-router": "7.15.0",
+		"tailwind-merge": "^3.5.0",
+		"zustand": "^5.0.13"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.4.14",
+		"@svgr/rollup": "^8.1.0",
+		"@tailwindcss/vite": "^4.2.2",
+		"@tanstack/react-query-devtools": "^5.100.9",
+		"@types/navermaps": "^3.9.1",
+		"@types/node": "^22",
+		"@types/react": "^19.2.14",
+		"@types/react-dom": "^19.2.3",
+		"@vitejs/plugin-react": "^6.0.1",
+		"husky": "^9.1.7",
+		"lint-staged": "^17.0.2",
+		"tailwindcss": "^4.2.2",
+		"typescript": "^5.9.3",
+		"vite": "^8.0.3"
+	},
+	"lint-staged": {
+		"*.{js,ts,jsx,tsx,json}": "biome check --write --files-ignore-unknown=true --no-errors-on-unmatched"
+	}
+}
