@@ -1,11 +1,13 @@
 import { useMap } from 'react-naver-maps';
 
+import { DEFAULT_ZOOM_LEVEL } from '@/features/location/consts/location.const';
 import type { Coordinates } from '@/shared/types/coordinates.type';
 import { CircleButton } from '@/shared/ui/CircleButton';
 import Icon from '@/shared/ui/Icon';
 
 type CurrentLocationButtonProps = {
 	coordinates: Coordinates | null;
+	zoomLevel?: number;
 };
 
 /**
@@ -19,13 +21,17 @@ type CurrentLocationButtonProps = {
  *   <CurrentLocationButton coordinates={location} />
  * </NaverMap>
  */
-const CurrentLocationButton = ({ coordinates }: CurrentLocationButtonProps) => {
+const CurrentLocationButton = ({
+	coordinates,
+	zoomLevel,
+}: CurrentLocationButtonProps) => {
 	const map = useMap();
 
 	const handleCurrentLocation = () => {
 		if (!coordinates) return;
 
-		map.panTo(coordinates);
+		map.setCenter(coordinates);
+		map.setZoom(zoomLevel ?? DEFAULT_ZOOM_LEVEL);
 	};
 
 	return (
