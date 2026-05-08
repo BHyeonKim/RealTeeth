@@ -1,11 +1,14 @@
 import { useMap } from 'react-naver-maps';
 
+import { DEFAULT_ZOOM_LEVEL } from '@/features/location/consts/location.const';
 import type { Coordinates } from '@/shared/types/coordinates.type';
 import { CircleButton } from '@/shared/ui/CircleButton';
 import Icon from '@/shared/ui/Icon';
+import Pressable from '@/shared/ui/Pressable';
 
 type CurrentLocationButtonProps = {
 	coordinates: Coordinates | null;
+	zoomLevel?: number;
 };
 
 /**
@@ -19,22 +22,25 @@ type CurrentLocationButtonProps = {
  *   <CurrentLocationButton coordinates={location} />
  * </NaverMap>
  */
-const CurrentLocationButton = ({ coordinates }: CurrentLocationButtonProps) => {
+const CurrentLocationButton = ({
+	coordinates,
+	zoomLevel,
+}: CurrentLocationButtonProps) => {
 	const map = useMap();
 
 	const handleCurrentLocation = () => {
 		if (!coordinates) return;
 
-		map.panTo(coordinates);
+		map.setCenter(coordinates);
+		map.setZoom(zoomLevel ?? DEFAULT_ZOOM_LEVEL);
 	};
 
 	return (
-		<CircleButton
-			className="fixed right-4 bottom-4 z-10"
-			onClick={handleCurrentLocation}
-		>
-			<Icon name="IconLocationOutline" width={32} height={32} />
-		</CircleButton>
+		<Pressable className="fixed right-4 bottom-4 z-10">
+			<CircleButton onClick={handleCurrentLocation}>
+				<Icon name="IconLocationOutline" width={32} height={32} />
+			</CircleButton>
+		</Pressable>
 	);
 };
 
