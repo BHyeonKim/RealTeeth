@@ -6,6 +6,9 @@ import type {
 	UltraSrtNcstItem,
 	UltraSrtNcstItemMap,
 	UltraSrtNcstResponse,
+	VilageFcstItem,
+	VilageFcstItemMap,
+	VilageFcstResponse,
 } from '../types/whetherApi.type';
 
 export default class WhetherService implements IWeatherService {
@@ -17,9 +20,11 @@ export default class WhetherService implements IWeatherService {
 		throw new Error('Method not implemented.');
 	}
 
-	async getNeweastForecast(gridCoord: GridCoord) {
-		const { baseDate, baseTime } = this.getBaseDate();
-
+	async getNeweastForecast(
+		gridCoord: GridCoord,
+		baseDate: string,
+		baseTime: string,
+	) {
 		const response = await this.apiClient.get<UltraSrtNcstResponse>(
 			'/api/typ02/openApi/VilageFcstInfoService_2.0/getUltraSrtNcst',
 			{
@@ -34,6 +39,29 @@ export default class WhetherService implements IWeatherService {
 		);
 
 		return this.ultraSrtNcstItemArraytoItemMap(
+			response.data.response.body.items.item,
+		);
+	}
+
+	async getVilageForecast(
+		gridCoord: GridCoord,
+		baseDate: string,
+		baseTime: string,
+	) {
+		const response = await this.apiClient.get<VilageFcstResponse>(
+			'/api/typ02/openApi/VilageFcstInfoService_2.0/getVilageFcst',
+			{
+				params: {
+					...gridCoord,
+					base_date: baseDate,
+					base_time: baseTime,
+					pageNo: 1,
+					numOfRows: 1000,
+				},
+			},
+		);
+
+		return this.vilageFcstItemArrayToItemMap(
 			response.data.response.body.items.item,
 		);
 	}
@@ -53,6 +81,23 @@ export default class WhetherService implements IWeatherService {
 			baseDate: `${year}${month}${day}`,
 			baseTime: `${hours}${minutes}`,
 		};
+	}
+
+	private vilageFcstItemArrayToItemMap(
+		items: VilageFcstItem[],
+	): VilageFcstItemMap {
+		const map: VilageFcstItemMap = {};
+
+		for (const item of items) {
+			const key = `${item.fcstDate}_${item.fcstTime}`;
+
+			if (!map[key]) {
+				map[key] = {} as Record<VilageFcstItem['category'], VilageFcstItem>;
+			}
+			map[key][item.category] = item;
+		}
+
+		return map;
 	}
 
 	private ultraSrtNcstItemArraytoItemMap(
