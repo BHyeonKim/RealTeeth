@@ -1,6 +1,10 @@
 import { whetherApiClient } from '@/shared/configs/whetherApi.config';
 import type { Coordinates, GridCoord } from '@/shared/types/coordinates.type';
 import { transCoordinatesToGrid } from '@/shared/utils/lambertConformalConicProject';
+import {
+	VILAGE_FORECAST_BASE_TIMES,
+	VILAGE_FORECAST_BUFFER_MINUTES,
+} from '../consts/whether.const';
 import type { IWeatherService, WeatherInfo } from '../types/whether.type';
 import type {
 	UltraSrtNcstItem,
@@ -107,23 +111,14 @@ class WhetherService implements IWeatherService {
 	 * API 제공 시작(발표 후 10분)을 고려해 가장 최근 유효한 시각을 반환
 	 */
 	getVilageFcstBaseDateTime(): { baseDate: string; baseTime: string } {
-		const BASE_TIMES = [
-			'2300',
-			'2000',
-			'1700',
-			'1400',
-			'1100',
-			'0800',
-			'0500',
-			'0200',
-		];
-		const BUFFER_MINUTES = 10;
-
 		const now = new Date();
 		const currentMinutes = now.getHours() * 100 + now.getMinutes();
 
-		for (const baseTime of BASE_TIMES) {
-			if (currentMinutes >= parseInt(baseTime, 10) + BUFFER_MINUTES) {
+		for (const baseTime of [...VILAGE_FORECAST_BASE_TIMES].reverse()) {
+			if (
+				currentMinutes >=
+				parseInt(baseTime, 10) + VILAGE_FORECAST_BUFFER_MINUTES
+			) {
 				return { baseDate: this.formatDate(now), baseTime };
 			}
 		}
