@@ -95,14 +95,9 @@ class WhetherService implements IWeatherService {
 	 */
 	getBaseDate(): { baseDate: string; baseTime: string } {
 		const now = new Date();
-		const year = now.getFullYear();
-		const month = String(now.getMonth() + 1).padStart(2, '0');
-		const day = String(now.getDate()).padStart(2, '0');
-		const hours = String(now.getHours()).padStart(2, '0');
-		const minutes = String(now.getMinutes()).padStart(2, '0');
 		return {
-			baseDate: `${year}${month}${day}`,
-			baseTime: `${hours}${minutes}`,
+			baseDate: this.formatDate(now),
+			baseTime: `${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}`,
 		};
 	}
 
@@ -112,28 +107,30 @@ class WhetherService implements IWeatherService {
 	 * API 제공 시작(발표 후 10분)을 고려해 가장 최근 유효한 시각을 반환
 	 */
 	getVilageFcstBaseDateTime(): { baseDate: string; baseTime: string } {
-		const BASE_TIMES = [2300, 2000, 1700, 1400, 1100, 800, 500, 200];
+		const BASE_TIMES = [
+			'2300',
+			'2000',
+			'1700',
+			'1400',
+			'1100',
+			'0800',
+			'0500',
+			'0200',
+		];
 		const BUFFER_MINUTES = 10;
 
 		const now = new Date();
-		const pad = (n: number) => String(n).padStart(2, '0');
-		const formatDate = (d: Date) =>
-			`${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}`;
-
 		const currentMinutes = now.getHours() * 100 + now.getMinutes();
 
 		for (const baseTime of BASE_TIMES) {
-			if (currentMinutes >= baseTime + BUFFER_MINUTES) {
-				return {
-					baseDate: formatDate(now),
-					baseTime: String(baseTime).padStart(4, '0'),
-				};
+			if (currentMinutes >= parseInt(baseTime, 10) + BUFFER_MINUTES) {
+				return { baseDate: this.formatDate(now), baseTime };
 			}
 		}
 
 		const yesterday = new Date(now);
 		yesterday.setDate(yesterday.getDate() - 1);
-		return { baseDate: formatDate(yesterday), baseTime: '2300' };
+		return { baseDate: this.formatDate(yesterday), baseTime: '2300' };
 	}
 
 	/**
@@ -172,6 +169,15 @@ class WhetherService implements IWeatherService {
 		return Object.fromEntries(
 			items.map((item) => [item.category, item]),
 		) as UltraSrtNcstItemMap;
+	}
+
+	/**
+	 * Date 객체를 YYYYMMDD 형식의 문자열로 변환
+	 * @param date Date 객체
+	 * @returns YYYYMMDD 형식의 문자열
+	 */
+	private formatDate(date: Date) {
+		return `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, '0')}${String(date.getDate()).padStart(2, '0')}`;
 	}
 }
 
