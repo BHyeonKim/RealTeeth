@@ -17,7 +17,6 @@ const WeatherMarker = ({ name, ...gridCoord }: WeatherMarkerProps) => {
 	if (!isSuccess || !data) {
 		return <div>에러</div>;
 	}
-
 	const temperature = data.TMP?.fcstValue ?? '-';
 	const minTemperature = data.TMN?.fcstValue ?? '-';
 	const maxTemperature = data.TMX?.fcstValue ?? '-';

@@ -5,13 +5,12 @@ import WhetherService from '../apis/WhetherService';
 import { VilageForecastOption } from '../apis/whetherQueryOptions';
 
 const useVilageForecast = (gridCoord: GridCoord) => {
-	const { baseDate, baseTime } = WhetherService.getBaseDate();
+	const { baseDate, baseTime } = WhetherService.getVilageFcstBaseDateTime();
 	const { data, ...rest } = useQuery(
 		VilageForecastOption(gridCoord, baseDate, baseTime),
 	);
 
-	const vilageForcaseDataKey = `${baseDate}_${baseTime}`;
-	const vilageForcaseData = data?.[vilageForcaseDataKey];
+	const vilageForcaseData = data?.[`${baseDate}_${baseTime}`];
 
 	return { data: vilageForcaseData, ...rest };
 };

@@ -107,6 +107,36 @@ class WhetherService implements IWeatherService {
 	}
 
 	/**
+	 * 단기예보 기준일자와 기준시각을 반환
+	 * 발표시각(0200, 0500, 0800, 1100, 1400, 1700, 2000, 2300) 기준으로
+	 * API 제공 시작(발표 후 10분)을 고려해 가장 최근 유효한 시각을 반환
+	 */
+	getVilageFcstBaseDateTime(): { baseDate: string; baseTime: string } {
+		const BASE_TIMES = [2300, 2000, 1700, 1400, 1100, 800, 500, 200];
+		const BUFFER_MINUTES = 10;
+
+		const now = new Date();
+		const pad = (n: number) => String(n).padStart(2, '0');
+		const formatDate = (d: Date) =>
+			`${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}`;
+
+		const currentMinutes = now.getHours() * 100 + now.getMinutes();
+
+		for (const baseTime of BASE_TIMES) {
+			if (currentMinutes >= baseTime + BUFFER_MINUTES) {
+				return {
+					baseDate: formatDate(now),
+					baseTime: String(baseTime).padStart(4, '0'),
+				};
+			}
+		}
+
+		const yesterday = new Date(now);
+		yesterday.setDate(yesterday.getDate() - 1);
+		return { baseDate: formatDate(yesterday), baseTime: '2300' };
+	}
+
+	/**
 	 * 단기예보 아이템 배열을 아이템 맵으로 변환
 	 * @param items 단기예보 아이템 배열
 	 * @returns 단기예보 아이템 맵
@@ -117,12 +147,15 @@ class WhetherService implements IWeatherService {
 		const map: VilageFcstItemMap = {};
 
 		for (const item of items) {
-			const key = `${item.fcstDate}_${item.fcstTime}`;
+			const key = `${item.baseDate}_${item.baseTime}`;
 
 			if (!map[key]) {
 				map[key] = {} as Record<VilageFcstItem['category'], VilageFcstItem>;
 			}
-			map[key][item.category] = item;
+
+			if (!map[key][item.category]) {
+				map[key][item.category] = item;
+			}
 		}
 
 		return map;
