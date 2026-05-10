@@ -1,23 +1,15 @@
-import { useMemo, useState } from 'react';
-import { CustomOverlay, useListener, useMap } from 'react-naver-maps';
+import { useMemo } from 'react';
+import { CustomOverlay } from 'react-naver-maps';
 
 import weatherGridPoints from '@/shared/data/weatherGrid.const.json';
 import { WEATHER_MARKER_ZOOM_LEVEL } from '../consts/location.const';
-import WeatherMarkerOverlay from './WeatherMarker';
+import useBounds from '../hooks/useBounds';
+import useZoomLevel from '../hooks/useZoomLevel';
+import WeatherMarker from './WeatherMarker';
 
 const WhetherMarkers = () => {
-	const map = useMap();
-	const [bounds, setBounds] = useState(
-		map.getBounds() as naver.maps.LatLngBounds,
-	);
-	const [zoomLevel, setZoomLevel] = useState(map.getZoom());
-	useListener(map, 'zoom_changed', () => {
-		setZoomLevel(map.getZoom());
-	});
-
-	useListener(map, 'bounds_changed', () => {
-		setBounds(map.getBounds() as naver.maps.LatLngBounds);
-	});
+	const bounds = useBounds();
+	const zoomLevel = useZoomLevel();
 
 	const candidatePoints = useMemo(() => {
 		if (zoomLevel < WEATHER_MARKER_ZOOM_LEVEL.CITY_MIN) {
@@ -45,7 +37,10 @@ const WhetherMarkers = () => {
 		} else {
 			// 모든 동
 			return weatherGridPoints.state.flatMap((s) =>
-				s.cities.flatMap((c) => c.towns),
+				s.cities
+					.filter((c) => c.name !== '')
+					.flatMap((c) => c.towns)
+					.filter((t) => t.name !== ''),
 			);
 		}
 	}, [zoomLevel]);
@@ -63,7 +58,7 @@ const WhetherMarkers = () => {
 					key={`${zoomLevel}-${point.name}`}
 					position={{ lat: point.lat, lng: point.lng }}
 				>
-					<WeatherMarkerOverlay
+					<WeatherMarker
 						name={point.name}
 						temperature={21}
 						minTemperature={13}

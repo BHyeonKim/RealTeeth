@@ -1,21 +1,19 @@
-type WeatherMarkerOverlayProps = {
+type WeatherMarkerProps = {
 	name: string;
 	temperature: number;
 	minTemperature: number;
 	maxTemperature: number;
 };
 
-const WeatherMarkerOverlay = ({
+const WeatherMarker = ({
 	name,
 	temperature,
 	minTemperature,
 	maxTemperature,
-}: WeatherMarkerOverlayProps) => {
+}: WeatherMarkerProps) => {
 	return (
-		<div className="flex h-15 min-w-16 flex-col items-center justify-center rounded-[10px] border border-yellow-400 bg-white px-2 py-1d">
-			<span className="mb-0.5 font-semibold text-[9px] text-white/50">
-				{name}
-			</span>
+		<div className="flex h-15 min-w-16 cursor-pointer flex-col items-center justify-center rounded-[10px] border border-yellow-400 bg-white px-2 py-1d">
+			<span className="mb-0.5 font-semibold text-[9px] text-black">{name}</span>
 			<div className="font-bold text-base text-yellow-400 leading-none">
 				{temperature}°C
 			</div>
@@ -27,4 +25,4 @@ const WeatherMarkerOverlay = ({
 	);
 };
 
-export default WeatherMarkerOverlay;
+export default WeatherMarker;
