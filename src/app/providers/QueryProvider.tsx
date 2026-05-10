@@ -1,6 +1,8 @@
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
 import { QueryClient } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
+
 import WhetherInvalidator from '@/entities/whether/ui/WhetherInvalidator';
 
 const persister = createAsyncStoragePersister({
@@ -24,6 +26,7 @@ export const QueryProvider = ({ children }: { children: React.ReactNode }) => {
 		>
 			<WhetherInvalidator />
 			{children}
+			<ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
 		</PersistQueryClientProvider>
 	);
 };
