@@ -11,7 +11,7 @@ import type {
 	VilageFcstResponse,
 } from '../types/whetherApi.type';
 
-export default class WhetherService implements IWeatherService {
+class WhetherService implements IWeatherService {
 	private readonly apiClient = whetherApiClient;
 
 	getWeatherInfo(coordinates: Coordinates): Promise<WeatherInfo> {
@@ -93,7 +93,7 @@ export default class WhetherService implements IWeatherService {
 	 * 기준일자와 기준시각을 반환
 	 * @returns 기준일자와 기준시각
 	 */
-	private getBaseDate(): { baseDate: string; baseTime: string } {
+	getBaseDate(): { baseDate: string; baseTime: string } {
 		const now = new Date();
 		const year = now.getFullYear();
 		const month = String(now.getMonth() + 1).padStart(2, '0');
@@ -141,3 +141,5 @@ export default class WhetherService implements IWeatherService {
 		) as UltraSrtNcstItemMap;
 	}
 }
+
+export default new WhetherService();
