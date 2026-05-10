@@ -45,6 +45,7 @@ const add = (a: number, b: number): number => a + b
 
 - type, enum, class 등은 PascalCase로 선언
 - 헝가리안 표기법(T 접두사 등) 사용 금지
+  - 단, 클래스와 타입명이 충돌할 경우 타입에 `I` 접두사를 허용한다
 
 ```tsx
 type Activity = {
