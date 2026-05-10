@@ -1,5 +1,12 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
+import { QueryClient } from '@tanstack/react-query';
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import WhetherInvalidator from '@/entities/whether/ui/WhetherInvalidator';
+
+const persister = createAsyncStoragePersister({
+	storage: window.localStorage,
+	key: 'realteeth-whether',
+});
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -11,9 +18,12 @@ const queryClient = new QueryClient({
 
 export const QueryProvider = ({ children }: { children: React.ReactNode }) => {
 	return (
-		<QueryClientProvider client={queryClient}>
+		<PersistQueryClientProvider
+			client={queryClient}
+			persistOptions={{ persister }}
+		>
 			<WhetherInvalidator />
 			{children}
-		</QueryClientProvider>
+		</PersistQueryClientProvider>
 	);
 };
