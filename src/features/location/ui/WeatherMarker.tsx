@@ -1,16 +1,27 @@
+import useVilageForecast from '@/entities/whether/hooks/useVilageForecast';
+import type { GridCoord } from '@/shared/types/coordinates.type';
+import WeatherMarkerSkeleton from './WeatherMarkerSkeleton';
+
 type WeatherMarkerProps = {
 	name: string;
-	temperature: number;
-	minTemperature: number;
-	maxTemperature: number;
-};
+} & GridCoord;
 
-const WeatherMarker = ({
-	name,
-	temperature,
-	minTemperature,
-	maxTemperature,
-}: WeatherMarkerProps) => {
+const WeatherMarker = ({ name, ...gridCoord }: WeatherMarkerProps) => {
+	const { data, isLoading, isFetching, isSuccess } =
+		useVilageForecast(gridCoord);
+
+	if (isLoading || isFetching) {
+		return <WeatherMarkerSkeleton />;
+	}
+
+	if (!isSuccess || !data) {
+		return <div>에러</div>;
+	}
+
+	const temperature = data.TMP?.fcstValue ?? '-';
+	const minTemperature = data.TMN?.fcstValue ?? '-';
+	const maxTemperature = data.TMX?.fcstValue ?? '-';
+
 	return (
 		<div className="flex h-15 min-w-16 cursor-pointer flex-col items-center justify-center rounded-[10px] border border-yellow-400 bg-white px-2 py-1d">
 			<span className="mb-0.5 font-semibold text-[9px] text-black">{name}</span>

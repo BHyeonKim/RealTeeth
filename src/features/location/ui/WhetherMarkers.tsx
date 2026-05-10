@@ -60,9 +60,8 @@ const WhetherMarkers = () => {
 				>
 					<WeatherMarker
 						name={point.name}
-						temperature={21}
-						minTemperature={13}
-						maxTemperature={26}
+						nx={point.nx}
+						ny={point.ny}
 					/>
 				</CustomOverlay>
 			))}
