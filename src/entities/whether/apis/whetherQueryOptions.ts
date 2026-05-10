@@ -1,5 +1,6 @@
 import type { UseQueryOptions } from '@tanstack/react-query';
 
+import { ONE_HOUR_MS } from '@/shared/consts/time.const';
 import type { GridCoord } from '@/shared/types/coordinates.type';
 import type {
 	UltraSrtNcstItemMap,
@@ -16,6 +17,8 @@ export const VilageForecastOption = (
 	queryFn: () =>
 		WhetherService.getVilageForecast(gridCoord, baseDate, baseTime),
 	queryKey: whetherQueryKeys.vilageForecast(gridCoord, baseDate, baseTime),
+	staleTime: Infinity,
+	gcTime: 3 * ONE_HOUR_MS, // 3시간
 });
 
 export const NeweastForecastOption = (
