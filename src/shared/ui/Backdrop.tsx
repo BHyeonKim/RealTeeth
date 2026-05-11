@@ -13,7 +13,7 @@ const Backdrop = ({ children, onClickBackdrop }: BackdropProps) => {
 
 	return (
 		<div
-			className="fixed inset-0 z-50 bg-black/10"
+			className="fixed inset-0 z-50 bg-black/50"
 			tabIndex={0}
 			aria-label="모달 닫기"
 			onClick={onClickBackdrop}
