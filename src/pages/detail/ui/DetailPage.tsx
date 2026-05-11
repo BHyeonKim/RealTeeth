@@ -1,5 +1,6 @@
 import { useNavigate, useSearchParams } from 'react-router';
 
+import { DEFAULT_PTY, DEFAULT_SKY } from '@/entities/whether/consts/whether.const';
 import useVilageFcstFull from '@/entities/whether/hooks/useVilageFcstFull';
 import { getWeatherInfo } from '@/entities/whether/lib/weatherEmoji';
 import Backdrop from '@/shared/ui/Backdrop';
@@ -22,8 +23,8 @@ const DetailPage = () => {
 	const { currentSlot, hourlySlots, baseDate, baseTime, isLoading } =
 		useVilageFcstFull({ nx, ny });
 
-	const pty = currentSlot?.PTY?.fcstValue ?? '0';
-	const sky = currentSlot?.SKY?.fcstValue ?? '1';
+	const pty = currentSlot?.PTY?.fcstValue ?? DEFAULT_PTY;
+	const sky = currentSlot?.SKY?.fcstValue ?? DEFAULT_SKY;
 	const { emoji, label } = getWeatherInfo(pty, sky);
 
 	return (

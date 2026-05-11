@@ -1,3 +1,5 @@
+import { DEFAULT_PTY } from '../consts/whether.const';
+
 type WeatherInfo = { emoji: string; label: string };
 
 const SKY_MAP: Record<string, WeatherInfo> = {
@@ -16,7 +18,9 @@ const PTY_MAP: Record<string, WeatherInfo> = {
 };
 
 export const getWeatherInfo = (pty: string, sky: string): WeatherInfo => {
-	if (pty !== '0') return PTY_MAP[pty] ?? { emoji: '🌫️', label: '알 수 없음' };
+	if (pty !== DEFAULT_PTY)
+		return PTY_MAP[pty] ?? { emoji: '🌫️', label: '알 수 없음' };
+
 	return SKY_MAP[sky] ?? { emoji: '🌫️', label: '알 수 없음' };
 };
 

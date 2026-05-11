@@ -1,3 +1,7 @@
+import {
+	DEFAULT_PTY,
+	DEFAULT_SKY,
+} from '@/entities/whether/consts/whether.const';
 import { getWeatherInfo } from '@/entities/whether/lib/weatherEmoji';
 import type {
 	VilageFcstCategory,
@@ -14,10 +18,12 @@ const HourlyForecast = ({ slots }: HourlyForecastProps) => {
 			<div className="mb-2 text-[12px] text-white/40">시간대별 기온</div>
 			<div className="scrollbar-hide flex gap-2 overflow-x-auto pb-1">
 				{slots.map((slot) => {
-					const pty = slot.PTY?.fcstValue ?? '0';
-					const sky = slot.SKY?.fcstValue ?? '1';
+					const pty = slot.PTY?.fcstValue ?? DEFAULT_PTY;
+					const sky = slot.SKY?.fcstValue ?? DEFAULT_SKY;
+
 					const { emoji } = getWeatherInfo(pty, sky);
 					const time = `${slot.TMP?.fcstTime?.slice(0, 2)}:00`;
+
 					return (
 						<div
 							key={`${slot.TMP?.fcstDate}_${slot.TMP?.fcstTime}`}
