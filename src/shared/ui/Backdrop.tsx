@@ -1,23 +1,27 @@
-import { type MouseEvent, type ReactNode } from 'react';
+/** biome-ignore-all lint/a11y/useSemanticElements: false positive */
+import { type KeyboardEvent, type ReactNode } from 'react';
 
 type BackdropProps = {
 	children: ReactNode;
 	onClickBackdrop: () => void;
 };
 
-const Backdrop = ({ children, onClickBackdrop: onClose }: BackdropProps) => {
-	const handleClick = (e: MouseEvent) => {
-		if (e.target === e.currentTarget) onClose();
+const Backdrop = ({ children, onClickBackdrop }: BackdropProps) => {
+	const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+		if (e.key === 'Escape') onClickBackdrop();
 	};
 
 	return (
-		<button
-			type="button"
-			className="fixed inset-0 z-50 w-full bg-black/50"
-			onClick={handleClick}
+		<div
+			className="fixed inset-0 z-50 bg-black/10"
+			tabIndex={0}
+			aria-label="모달 닫기"
+			onClick={onClickBackdrop}
+			onKeyDown={handleKeyDown}
+			role="button"
 		>
 			{children}
-		</button>
+		</div>
 	);
 };
 
