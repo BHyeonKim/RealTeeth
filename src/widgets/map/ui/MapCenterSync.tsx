@@ -4,24 +4,22 @@ import { useSearchParams } from 'react-router';
 
 import { findTownByGridCoord } from '../lib/findTownByGridCoord';
 
-const DEFAULT_ZOOM = 12;
-
 const MapCenterSync = () => {
 	const map = useMap();
 	const [searchParams] = useSearchParams();
 	const nx = Number(searchParams.get('nx'));
 	const ny = Number(searchParams.get('ny'));
-	const zoom = Number(searchParams.get('zoom'));
+	const source = searchParams.get('source');
 
 	useEffect(() => {
 		if (!nx || !ny) return;
+		if (source === 'marker') return;
 
 		const town = findTownByGridCoord(nx, ny);
 		if (!town) return;
 
 		map.setCenter({ lat: town.lat, lng: town.lng });
-		map.setZoom(zoom || DEFAULT_ZOOM);
-	}, [nx, ny, zoom, map]);
+	}, [nx, ny, map, source]);
 
 	return null;
 };

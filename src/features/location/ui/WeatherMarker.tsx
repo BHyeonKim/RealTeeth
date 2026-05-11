@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router';
 
 import useVilageForecast from '@/entities/whether/hooks/useVilageForecast';
 import type { GridCoord } from '@/shared/types/coordinates.type';
-import useZoomLevel from '../hooks/useZoomLevel';
 import WeatherMarkerSkeleton from './WeatherMarkerSkeleton';
 
 type WeatherMarkerProps = {
@@ -12,7 +11,6 @@ type WeatherMarkerProps = {
 
 const WeatherMarker = ({ name, region, ...gridCoord }: WeatherMarkerProps) => {
 	const navigate = useNavigate();
-	const zoomLevel = useZoomLevel();
 	const { data, isLoading, isFetching, isSuccess } =
 		useVilageForecast(gridCoord);
 
@@ -30,7 +28,7 @@ const WeatherMarker = ({ name, region, ...gridCoord }: WeatherMarkerProps) => {
 
 	const handleClick = () => {
 		navigate(
-			`/detail?nx=${gridCoord.nx}&ny=${gridCoord.ny}&name=${encodeURIComponent(name)}&region=${encodeURIComponent(region)}&zoom=${zoomLevel}`,
+			`/detail?nx=${gridCoord.nx}&ny=${gridCoord.ny}&name=${encodeURIComponent(name)}&region=${encodeURIComponent(region)}&source=marker`,
 		);
 	};
 
