@@ -10,7 +10,9 @@ const useVilageForecast = (gridCoord: GridCoord) => {
 		VilageForecastOption(gridCoord, baseDate, baseTime),
 	);
 
-	const vilageForcaseData = data?.[`${baseDate}_${baseTime}`];
+	const vilageForcaseData = data
+		? Object.entries(data).sort(([a], [b]) => a.localeCompare(b))[0]?.[1]
+		: undefined;
 
 	return { data: vilageForcaseData, ...rest };
 };

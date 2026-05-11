@@ -139,7 +139,7 @@ class WhetherService implements IWeatherService {
 		const map: VilageFcstItemMap = {};
 
 		for (const item of items) {
-			const key = `${item.baseDate}_${item.baseTime}`;
+			const key = `${item.fcstDate}_${item.fcstTime}`;
 
 			if (!map[key]) {
 				map[key] = {} as Record<VilageFcstItem['category'], VilageFcstItem>;

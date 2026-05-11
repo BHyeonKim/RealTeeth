@@ -11,13 +11,13 @@ const useVilageFcstFull = (gridCoord: GridCoord) => {
 		VilageForecastOption(gridCoord, baseDate, baseTime),
 	);
 
-	const currentSlot = data?.[`${baseDate}_${baseTime}`];
-
 	const hourlySlots = data
 		? Object.entries(data)
 				.sort(([a], [b]) => a.localeCompare(b))
 				.map(([, slot]) => slot)
 		: [];
+
+	const currentSlot = hourlySlots[0];
 
 	return { currentSlot, hourlySlots, baseDate, baseTime, ...rest };
 };

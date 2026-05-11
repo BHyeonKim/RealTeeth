@@ -5,9 +5,10 @@ import SearchItem, { type SearchItemProps } from './SearchItem';
 type SearchItemListProps = {
 	items: SearchItemProps[];
 	className?: string;
+	onItemClick?: () => void;
 };
 
-const SearchItemList = ({ items, className }: SearchItemListProps) => {
+const SearchItemList = ({ items, className, onItemClick }: SearchItemListProps) => {
 	return (
 		<ul
 			className={twMerge(
@@ -16,7 +17,7 @@ const SearchItemList = ({ items, className }: SearchItemListProps) => {
 			)}
 		>
 			{items.map((item) => (
-				<SearchItem key={`${item.name}-${item.address}`} {...item} />
+				<SearchItem key={`${item.name}-${item.address}`} {...item} onItemClick={onItemClick} />
 			))}
 		</ul>
 	);

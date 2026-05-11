@@ -6,7 +6,11 @@ import type { SearchLocation } from '../types/search.type';
 
 export type SearchItemProps = SearchLocation;
 
-const SearchItem = ({ name, region, address, gridCoord }: SearchItemProps) => {
+type SearchItemComponentProps = SearchItemProps & {
+	onItemClick?: () => void;
+};
+
+const SearchItem = ({ name, region, address, gridCoord, onItemClick }: SearchItemComponentProps) => {
 	const { data, isLoading } = useVilageForecast(gridCoord ?? { nx: 0, ny: 0 });
 	const navigate = useNavigate();
 	const temperature = data?.TMP?.fcstValue ?? '-';
@@ -15,6 +19,7 @@ const SearchItem = ({ name, region, address, gridCoord }: SearchItemProps) => {
 
 	const handleClick = () => {
 		if (!gridCoord) return;
+		onItemClick?.();
 		navigate(
 			`/detail?nx=${gridCoord?.nx ?? ''}&ny=${gridCoord?.ny ?? ''}&name=${encodeURIComponent(name)}&region=${encodeURIComponent(region)}`,
 		);

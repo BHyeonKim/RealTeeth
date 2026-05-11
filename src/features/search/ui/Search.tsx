@@ -10,15 +10,17 @@ type SearchProps = {
 };
 
 const Search = ({ className }: SearchProps) => {
-	const { filteredDistricts, handleSearch, query } = useSearchLocation();
-	const isDetailPage = useMatch('/detail');
+	const { filteredDistricts, handleSearch, query, clearQuery } =
+		useSearchLocation();
 
 	return (
 		<div className={twMerge('w-full max-w-95', className)}>
 			<SearchBar onChange={handleSearch} value={query} />
-			{!isDetailPage && (
-				<SearchItemList className="mt-2" items={filteredDistricts} />
-			)}
+			<SearchItemList
+				className="mt-2"
+				items={filteredDistricts}
+				onItemClick={clearQuery}
+			/>
 		</div>
 	);
 };
