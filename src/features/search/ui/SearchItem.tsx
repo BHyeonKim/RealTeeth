@@ -1,28 +1,20 @@
+import { Link } from 'react-router';
+
 import useVilageForecast from '@/entities/whether/hooks/useVilageForecast';
 import Icon from '@/shared/ui/Icon';
-
 import type { SearchLocation } from '../types/search.type';
 
-export type SearchItemProps = SearchLocation & {
-	onClick?: () => void;
-};
+export type SearchItemProps = SearchLocation;
 
-const SearchItem = ({
-	name,
-	region,
-	address,
-	gridCoord,
-	onClick,
-}: SearchItemProps) => {
+const SearchItem = ({ name, region, address, gridCoord }: SearchItemProps) => {
 	const { data, isLoading } = useVilageForecast(gridCoord ?? { nx: 0, ny: 0 });
 	const temperature = data?.TMP?.fcstValue ?? '-';
 	const isTemperatureExists = !!gridCoord;
 	const isTemperatureLoading = isLoading && isTemperatureExists;
 
 	return (
-		<button
-			type="button"
-			onClick={onClick}
+		<Link
+			to={`/detail?nx=${gridCoord?.nx ?? ''}&ny=${gridCoord?.ny ?? ''}`}
 			className="flex w-full items-center gap-3 px-4 py-3 text-left transition-colors"
 		>
 			<div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gray-400/10">
@@ -49,7 +41,7 @@ const SearchItem = ({
 					</div>
 				)}
 			</div>
-		</button>
+		</Link>
 	);
 };
 
