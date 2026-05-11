@@ -10,8 +10,22 @@ const useVilageForecast = (gridCoord: GridCoord) => {
 		VilageForecastOption(gridCoord, baseDate, baseTime),
 	);
 
-	const vilageForcaseData = data
-		? Object.entries(data).sort(([a], [b]) => a.localeCompare(b))[0]?.[1]
+	const sortedSlots = data
+		? Object.entries(data)
+				.sort(([a], [b]) => a.localeCompare(b))
+				.map(([, slot]) => slot)
+		: [];
+
+	const firstSlot = sortedSlots[0];
+	const tmnItem = sortedSlots.find((slot) => slot.TMN)?.TMN;
+	const tmxItem = sortedSlots.find((slot) => slot.TMX)?.TMX;
+
+	const vilageForcaseData = firstSlot
+		? {
+				...firstSlot,
+				...(tmnItem ? { TMN: tmnItem } : {}),
+				...(tmxItem ? { TMX: tmxItem } : {}),
+			}
 		: undefined;
 
 	return { data: vilageForcaseData, ...rest };

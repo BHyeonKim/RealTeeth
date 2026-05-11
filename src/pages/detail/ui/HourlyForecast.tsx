@@ -23,12 +23,16 @@ const HourlyForecast = ({ slots }: HourlyForecastProps) => {
 
 					const { emoji } = getWeatherInfo(pty, sky);
 					const time = `${slot.TMP?.fcstTime?.slice(0, 2)}:00`;
+					const date = slot.TMP?.fcstDate
+						? `${Number(slot.TMP.fcstDate.slice(4, 6))}/${Number(slot.TMP.fcstDate.slice(6, 8))}`
+						: '';
 
 					return (
 						<div
 							key={`${slot.TMP?.fcstDate}_${slot.TMP?.fcstTime}`}
 							className="flex shrink-0 flex-col items-center gap-1 rounded-xl border border-white/10 bg-white/5 px-3 py-2"
 						>
+							<span className="text-[10px] text-white/30">{date}</span>
 							<span className="text-[11px] text-white/50">{time}</span>
 							<span className="text-base">{emoji}</span>
 							<span className="font-semibold text-[13px] text-white">

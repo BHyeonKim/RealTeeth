@@ -20,7 +20,7 @@ const DetailPage = () => {
 	const name = searchParams.get('name') ?? '';
 	const region = searchParams.get('region') ?? '';
 
-	const { currentSlot, hourlySlots, baseDate, baseTime, isLoading } =
+	const { currentSlot, tmnSlot, tmxSlot, hourlySlots, baseDate, baseTime, isLoading } =
 		useVilageFcstFull({ nx, ny });
 
 	const pty = currentSlot?.PTY?.fcstValue ?? DEFAULT_PTY;
@@ -43,8 +43,8 @@ const DetailPage = () => {
 					<>
 						<TemperatureCard
 							tmp={currentSlot?.TMP?.fcstValue ?? '-'}
-							tmn={currentSlot?.TMN?.fcstValue ?? '-'}
-							tmx={currentSlot?.TMX?.fcstValue ?? '-'}
+							tmn={tmnSlot?.TMN?.fcstValue ?? '-'}
+							tmx={tmxSlot?.TMX?.fcstValue ?? '-'}
 							emoji={emoji}
 							label={label}
 						/>

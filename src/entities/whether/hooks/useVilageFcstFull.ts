@@ -18,8 +18,10 @@ const useVilageFcstFull = (gridCoord: GridCoord) => {
 		: [];
 
 	const currentSlot = hourlySlots[0];
+	const tmnSlot = hourlySlots.find((slot) => slot.TMN);
+	const tmxSlot = hourlySlots.find((slot) => slot.TMX);
 
-	return { currentSlot, hourlySlots, baseDate, baseTime, ...rest };
+	return { currentSlot, tmnSlot, tmxSlot, hourlySlots, baseDate, baseTime, ...rest };
 };
 
 export default useVilageFcstFull;
