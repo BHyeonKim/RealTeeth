@@ -32,7 +32,9 @@ const useSearchLocation = () => {
 		setQuery(e.currentTarget.value);
 	};
 
-	return { filteredDistricts, handleSearch, query };
+	const clearQuery = () => setQuery('');
+
+	return { filteredDistricts, handleSearch, query, clearQuery };
 };
 
 export default useSearchLocation;
