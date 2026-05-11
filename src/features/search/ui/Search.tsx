@@ -1,4 +1,3 @@
-import { useMatch } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
 import useSearchLocation from '../hooks/useSearchLocation';
