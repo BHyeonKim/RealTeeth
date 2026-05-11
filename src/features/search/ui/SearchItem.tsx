@@ -1,9 +1,9 @@
+import useVilageForecast from '@/entities/whether/hooks/useVilageForecast';
 import Icon from '@/shared/ui/Icon';
+
 import type { SearchLocation } from '../types/search.type';
 
 export type SearchItemProps = SearchLocation & {
-	temperature?: number;
-	weatherEmoji?: string;
 	onClick?: () => void;
 };
 
@@ -11,10 +11,14 @@ const SearchItem = ({
 	name,
 	region,
 	address,
-	temperature,
-	weatherEmoji,
+	gridCoord,
 	onClick,
 }: SearchItemProps) => {
+	const { data, isLoading } = useVilageForecast(gridCoord ?? { nx: 0, ny: 0 });
+	const temperature = data?.TMP?.fcstValue ?? '-';
+	const isTemperatureExists = !!gridCoord;
+	const isTemperatureLoading = isLoading && isTemperatureExists;
+
 	return (
 		<button
 			type="button"
@@ -33,10 +37,17 @@ const SearchItem = ({
 			</div>
 
 			<div className="shrink-0 text-right">
-				<div className="font-bold text-[15px] text-emerald-400">
-					{temperature}°
-				</div>
-				<div className="text-[14px]">{weatherEmoji}</div>
+				{!isTemperatureExists ? (
+					<div className="text-[8px] text-gray-400">
+						해당 장소의 정보가 제공되지 않습니다.
+					</div>
+				) : isTemperatureLoading ? (
+					<div className="h-5 w-8 animate-pulse rounded bg-gray-200" />
+				) : (
+					<div className="font-bold text-[15px] text-emerald-400">
+						{temperature}°
+					</div>
+				)}
 			</div>
 		</button>
 	);
