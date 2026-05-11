@@ -13,34 +13,30 @@ const WhetherMarkers = () => {
 
 	const candidatePoints = useMemo(() => {
 		if (zoomLevel < WEATHER_MARKER_ZOOM_LEVEL.CITY_MIN) {
-			// 시/도 대표 좌표
-			return weatherGridPoints.state.map((s) => {
-				const stateName = s.name;
-				return {
-					...s.cities[0].towns[0],
-					name: stateName,
-				};
-			});
+			return weatherGridPoints.state.map((s) => ({
+				...s.cities[0].towns[0],
+				name: s.name,
+				region: '',
+			}));
 		} else if (zoomLevel < WEATHER_MARKER_ZOOM_LEVEL.TOWN_MIN) {
-			// 구 대표 좌표
 			return weatherGridPoints.state.flatMap((s) =>
 				s.cities
 					.filter((c) => c.name !== '')
-					.map((c) => {
-						const cityName = c.name;
-						return {
-							...c.towns[0],
-							name: cityName,
-						};
-					}),
+					.map((c) => ({
+						...c.towns[0],
+						name: c.name,
+						region: s.name,
+					})),
 			);
 		} else {
-			// 모든 동
 			return weatherGridPoints.state.flatMap((s) =>
 				s.cities
 					.filter((c) => c.name !== '')
-					.flatMap((c) => c.towns)
-					.filter((t) => t.name !== ''),
+					.flatMap((c) =>
+						c.towns
+							.filter((t) => t.name !== '')
+							.map((t) => ({ ...t, region: c.name })),
+					),
 			);
 		}
 	}, [zoomLevel]);
@@ -60,6 +56,7 @@ const WhetherMarkers = () => {
 				>
 					<WeatherMarker
 						name={point.name}
+						region={point.region}
 						nx={point.nx}
 						ny={point.ny}
 					/>
