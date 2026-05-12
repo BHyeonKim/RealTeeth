@@ -16,7 +16,7 @@ const FavoriteToggleButton = ({ className }: FavoriteToggleButtonProps) => {
 			type="button"
 			onClick={() => navigate('/favorite')}
 			className={twMerge(
-				'flex cursor-pointer items-center gap-2 rounded-2xl border border-white/15 bg-white/10 px-4 py-2.5 shadow-lg backdrop-blur-xl',
+				'flex w-fit cursor-pointer items-center gap-2 rounded-2xl border border-white/15 bg-white/10 px-4 py-2.5 shadow-lg backdrop-blur-xl',
 				className,
 			)}
 			aria-label="즐겨찾기 열기"

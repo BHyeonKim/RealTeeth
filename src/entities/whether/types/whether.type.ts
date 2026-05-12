@@ -1,4 +1,5 @@
-import type { Coordinates } from '@/shared/types/coordinates.type';
+import type { GridCoord } from '@/shared/types/coordinates.type';
+import type { UltraSrtNcstItemMap, VilageFcstItemMap } from './whetherApi.type';
 
 /** 현재 기상 실황 */
 export type CurrentWeather = {
@@ -29,7 +30,22 @@ export type WeatherInfo = {
 	forecastedAt: string; // 예보시각
 };
 
+export type WeatherBaseDateTime = {
+	baseDate: string;
+	baseTime: string;
+};
+
 /** 날씨 조회 */
 export interface IWeatherService {
-	getWeatherInfo(coordinates: Coordinates): Promise<WeatherInfo>;
+	getNeweastForecast(
+		gridCoord: GridCoord,
+		baseDate: string,
+		baseTime: string,
+	): Promise<UltraSrtNcstItemMap>;
+	getVilageForecast(
+		gridCoord: GridCoord,
+		baseDate: string,
+		baseTime: string,
+	): Promise<VilageFcstItemMap>;
+	getVilageFcstBaseDateTime(): WeatherBaseDateTime;
 }
