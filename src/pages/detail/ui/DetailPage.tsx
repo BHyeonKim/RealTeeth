@@ -57,7 +57,7 @@ const DetailPage = () => {
 						<HourlyForecast slots={hourlySlots} />
 					</>
 				)}
-				<FavoriteButton />
+				<FavoriteButton favorite={{ name, region, gridCoord: { nx, ny } }} />
 			</div>
 		</Backdrop>
 	);

@@ -1,5 +1,5 @@
 /** biome-ignore-all lint/a11y/useSemanticElements: false positive */
-import { type KeyboardEvent, type ReactNode } from 'react';
+import { type KeyboardEvent, type MouseEvent, type ReactNode } from 'react';
 
 type BackdropProps = {
 	children: ReactNode;
@@ -11,12 +11,17 @@ const Backdrop = ({ children, onClickBackdrop }: BackdropProps) => {
 		if (e.key === 'Escape') onClickBackdrop();
 	};
 
+	const handleBackdropClick = (e: MouseEvent<HTMLDivElement>) => {
+		if (e.target !== e.currentTarget) return;
+		onClickBackdrop();
+	};
+
 	return (
 		<div
-			className="fixed inset-0 z-50 bg-black/10"
+			className="fixed inset-0 z-50 bg-black/50"
 			tabIndex={0}
 			aria-label="모달 닫기"
-			onClick={onClickBackdrop}
+			onClick={handleBackdropClick}
 			onKeyDown={handleKeyDown}
 			role="button"
 		>

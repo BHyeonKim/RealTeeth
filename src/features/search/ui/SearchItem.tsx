@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import useVilageForecast from '@/entities/whether/hooks/useVilageForecast';
 import Icon from '@/shared/ui/Icon';
@@ -10,7 +10,13 @@ type SearchItemComponentProps = SearchItemProps & {
 	onItemClick?: () => void;
 };
 
-const SearchItem = ({ name, region, address, gridCoord, onItemClick }: SearchItemComponentProps) => {
+const SearchItem = ({
+	name,
+	region,
+	address,
+	gridCoord,
+	onItemClick,
+}: SearchItemComponentProps) => {
 	const { data, isLoading } = useVilageForecast(gridCoord ?? { nx: 0, ny: 0 });
 	const navigate = useNavigate();
 	const temperature = data?.TMP?.fcstValue ?? '-';
