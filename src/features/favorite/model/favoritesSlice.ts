@@ -1,3 +1,4 @@
+import { toast } from 'sonner';
 import type { StateCreator } from 'zustand';
 
 import { MAX_FAVORITES } from '../consts/favorite.const';
@@ -50,7 +51,10 @@ export const createFavoritesSlice: StateCreator<
 				};
 			}
 
-			if (state.favorites.length >= MAX_FAVORITES) return state;
+			if (state.favorites.length >= MAX_FAVORITES) {
+				toast.error('즐겨찾기는 6개까지만 추가할 수 있어요');
+				return state;
+			}
 
 			return { favorites: [...state.favorites, favorite] };
 		}),
