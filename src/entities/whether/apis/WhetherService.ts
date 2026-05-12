@@ -1,11 +1,13 @@
 import { whetherApiClient } from '@/shared/configs/whetherApi.config';
-import type { Coordinates, GridCoord } from '@/shared/types/coordinates.type';
-import { transCoordinatesToGrid } from '@/shared/utils/lambertConformalConicProject';
+import type { GridCoord } from '@/shared/types/coordinates.type';
 import {
 	VILAGE_FORECAST_BASE_TIMES,
 	VILAGE_FORECAST_BUFFER_MINUTES,
 } from '../consts/whether.const';
-import type { IWeatherService, WeatherInfo } from '../types/whether.type';
+import type {
+	IWeatherService,
+	WeatherBaseDateTime,
+} from '../types/whether.type';
 import type {
 	UltraSrtNcstItem,
 	UltraSrtNcstItemMap,
@@ -17,12 +19,6 @@ import type {
 
 class WhetherService implements IWeatherService {
 	private readonly apiClient = whetherApiClient;
-
-	getWeatherInfo(coordinates: Coordinates): Promise<WeatherInfo> {
-		const gridCoord = this.transCoordinatesToGrid(coordinates);
-
-		throw new Error('Method not implemented.');
-	}
 
 	/**
 	 * 초단기실황 조회
@@ -85,32 +81,11 @@ class WhetherService implements IWeatherService {
 	}
 
 	/**
-	 * 좌표를 격자 좌표로 변환
-	 * @param coordinates 좌표
-	 * @returns 격자 좌표
-	 */
-	private transCoordinatesToGrid(coordinates: Coordinates): GridCoord {
-		return transCoordinatesToGrid(coordinates);
-	}
-
-	/**
-	 * 기준일자와 기준시각을 반환
-	 * @returns 기준일자와 기준시각
-	 */
-	getBaseDate(): { baseDate: string; baseTime: string } {
-		const now = new Date();
-		return {
-			baseDate: this.formatDate(now),
-			baseTime: `${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}`,
-		};
-	}
-
-	/**
 	 * 단기예보 기준일자와 기준시각을 반환
 	 * 발표시각(0200, 0500, 0800, 1100, 1400, 1700, 2000, 2300) 기준으로
 	 * API 제공 시작(발표 후 10분)을 고려해 가장 최근 유효한 시각을 반환
 	 */
-	getVilageFcstBaseDateTime(): { baseDate: string; baseTime: string } {
+	getVilageFcstBaseDateTime(): WeatherBaseDateTime {
 		const now = new Date();
 		const currentMinutes = now.getHours() * 100 + now.getMinutes();
 
