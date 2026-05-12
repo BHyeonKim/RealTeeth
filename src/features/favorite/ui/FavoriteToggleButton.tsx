@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
 import { useFavoriteStore } from '../model/useFavoriteStore';
@@ -7,13 +8,13 @@ type FavoriteToggleButtonProps = {
 };
 
 const FavoriteToggleButton = ({ className }: FavoriteToggleButtonProps) => {
-	const toggleSidebar = useFavoriteStore((state) => state.toggleSidebar);
+	const navigate = useNavigate();
 	const favorites = useFavoriteStore((state) => state.favorites);
 
 	return (
 		<button
 			type="button"
-			onClick={toggleSidebar}
+			onClick={() => navigate('/favorite')}
 			className={twMerge(
 				'flex cursor-pointer items-center gap-2 rounded-2xl border border-white/15 bg-white/10 px-4 py-2.5 shadow-lg backdrop-blur-xl',
 				className,

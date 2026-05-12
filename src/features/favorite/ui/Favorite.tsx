@@ -1,19 +1,18 @@
 import CloseButton from '@/shared/ui/CloseButton';
+
 import { MAX_FAVORITES } from '../consts/favorite.const';
 import { useFavoriteStore } from '../model/useFavoriteStore';
 import FavoriteItemList from './FavoriteItemList';
 
-const Favorite = () => {
+type FavoriteProps = {
+	onClose: () => void;
+};
+
+const Favorite = ({ onClose }: FavoriteProps) => {
 	const favorites = useFavoriteStore((state) => state.favorites);
-	const isOpen = useFavoriteStore((state) => state.isOpen);
-	const closeSidebar = useFavoriteStore((state) => state.closeSidebar);
 
 	return (
-		<div
-			className={`fixed top-0 left-0 z-20 flex h-full w-80 flex-col border-white/10 border-r bg-black/60 shadow-[8px_0_32px_rgba(0,0,0,0.4)] backdrop-blur-xl transition-transform duration-300 ${
-				isOpen ? 'translate-x-0' : '-translate-x-full'
-			}`}
-		>
+		<div className="fixed top-0 left-0 z-20 flex h-full w-80 flex-col border-white/10 border-r bg-black/60 shadow-[8px_0_32px_rgba(0,0,0,0.4)] backdrop-blur-xl">
 			<div className="flex shrink-0 items-center justify-between border-white/10 border-b px-5 py-4">
 				<div className="flex items-center gap-2">
 					<span className="text-base text-violet-300">★</span>
@@ -22,7 +21,7 @@ const Favorite = () => {
 						{favorites.length}/{MAX_FAVORITES}
 					</span>
 				</div>
-				<CloseButton onClick={closeSidebar} />
+				<CloseButton onClick={onClose} />
 			</div>
 
 			<div className="scrollbar-hide flex-1 overflow-y-auto p-4">
