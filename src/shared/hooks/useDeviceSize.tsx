@@ -2,7 +2,7 @@ import { useSyncExternalStore } from 'react';
 
 type ScreenSize = 'mobile' | 'desktop';
 
-const MOBILE_QUERY = '(max-width: 425px)';
+const MOBILE_QUERY = '(max-width: 440px)';
 
 const getScreenSize = (): ScreenSize => {
 	return window.matchMedia(MOBILE_QUERY).matches ? 'mobile' : 'desktop';
