@@ -1,6 +1,7 @@
 import { useMap } from 'react-naver-maps';
 import { toast } from 'sonner';
 import { DEFAULT_ZOOM_LEVEL } from '@/features/location/consts/location.const';
+import useDeviceSize from '@/shared/hooks/useDeviceSize';
 import type { Coordinates } from '@/shared/types/coordinates.type';
 import { CircleButton } from '@/shared/ui/CircleButton';
 import Icon from '@/shared/ui/Icon';
@@ -27,6 +28,8 @@ const CurrentLocationButton = ({
 	zoomLevel,
 }: CurrentLocationButtonProps) => {
 	const map = useMap();
+	const device = useDeviceSize();
+	const isMobile = device === 'mobile';
 
 	const handleCurrentLocation = () => {
 		if (!coordinates) {
@@ -39,7 +42,9 @@ const CurrentLocationButton = ({
 	};
 
 	return (
-		<Pressable className="fixed right-4 bottom-4 z-10">
+		<Pressable
+			className={`fixed right-4 z-10 ${isMobile ? 'bottom-28' : 'bottom-4'}`}
+		>
 			<CircleButton onClick={handleCurrentLocation}>
 				<Icon name="IconLocationOutline" width={32} height={32} />
 			</CircleButton>

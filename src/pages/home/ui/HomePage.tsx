@@ -15,7 +15,7 @@ const HomePage = () => {
 	return (
 		<div className="relative h-full w-full">
 			<div
-				className={`fixed top-4 z-10 flex w-full max-w-95 flex-col gap-3 ${isDesktop ? 'left-4' : 'left-1/2 -translate-x-1/2'}`}
+				className={`fixed top-4 z-50 flex w-full max-w-95 flex-col gap-3 ${isDesktop ? 'left-4' : 'left-1/2 -translate-x-1/2'}`}
 			>
 				{isDesktop && <FavoriteToggleButton />}
 				<Search />
