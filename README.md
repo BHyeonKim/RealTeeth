@@ -86,11 +86,7 @@ pnpm dev
 pnpm build
 ```
 
-### 빌드 결과 미리보기
-
-```bash
-pnpm preview
-```
+> ⚠️ 기상청 API는 CORS 허용 헤더가 없어 브라우저에서 직접 호출할 수 없습니다. 로컬에서는 Vite dev server의 프록시가 이를 처리하므로 **`pnpm dev`로만 실행 가능**합니다. `pnpm preview`는 프록시가 없어 API 호출이 차단됩니다.
 
 ## ⚙️ 환경변수
 
@@ -105,7 +101,6 @@ VITE_KOREA_METEOROLOGICAL_ADMINISTRATION_API_KEY=기상청_API_Hub_인증키
 | 환경변수 | 설명 | 발급 |
 |---------|------|------|
 | `VITE_NAVER_MAP_CLIENT_ID` | 네이버 지도 API Client ID | [네이버 클라우드 플랫폼](https://www.ncloud.com/) → Application 등록 |
-| `VITE_KOREA_METEOROLOGICAL_ADMINISTRATION_SERVER_URL` | 기상청 API 기본 URL. `pnpm dev` 기준 `http://localhost:5173`으로 설정하면 Vite dev server가 `/api` 요청을 `https://apihub.kma.go.kr`로 프록시합니다. Vite preview 서버는 proxy를 지원하지 않으므로 `pnpm preview`로는 API 호출이 동작하지 않습니다. | — |
 | `VITE_KOREA_METEOROLOGICAL_ADMINISTRATION_API_KEY` | 기상청 단기예보 API 인증키 | [기상청 API Hub](https://apihub.kma.go.kr/) → 활용신청 |
 
 Vercel 배포 환경에서는 `vercel.json`의 rewrite 규칙이 같은 역할을 수행합니다.
