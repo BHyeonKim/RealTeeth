@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+html,
+body {
+	overscroll-behavior-y: none;
+}
+
 @font-face {
 	font-family: "Pretendard";
 	font-weight: 100;
