@@ -1,7 +1,7 @@
 import { AnimatePresence } from 'motion/react';
 import { Outlet, useLocation } from 'react-router';
 
-import { FavoriteToggleButton } from '@/features/favorite';
+import { FavoriteBottomSheet, FavoriteToggleButton } from '@/features/favorite';
 import Search from '@/features/search/ui/Search';
 import useDeviceSize from '@/shared/hooks/useDeviceSize';
 import { WeatherMap } from '@/widgets/map';
@@ -10,6 +10,7 @@ const HomePage = () => {
 	const location = useLocation();
 	const device = useDeviceSize();
 	const isDesktop = device === 'desktop';
+	const isMobileHome = device === 'mobile' && location.pathname === '/';
 
 	return (
 		<div className="relative h-full w-full">
@@ -20,6 +21,7 @@ const HomePage = () => {
 				<Search />
 			</div>
 			<WeatherMap />
+			{isMobileHome && <FavoriteBottomSheet />}
 			<AnimatePresence>
 				<Outlet key={location.pathname} />
 			</AnimatePresence>
