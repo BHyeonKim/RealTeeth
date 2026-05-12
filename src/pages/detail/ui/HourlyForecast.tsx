@@ -7,16 +7,22 @@ import type {
 	VilageFcstCategory,
 	VilageFcstItem,
 } from '@/entities/whether/types/whetherApi.type';
+import useDeviceSize from '@/shared/hooks/useDeviceSize';
 
 type HourlyForecastProps = {
 	slots: Record<VilageFcstCategory, VilageFcstItem>[];
 };
 
 const HourlyForecast = ({ slots }: HourlyForecastProps) => {
+	const device = useDeviceSize();
+	const isMobile = device === 'mobile';
+
 	return (
 		<div className="mb-5">
 			<div className="mb-2 text-[12px] text-white/40">시간대별 기온</div>
-			<div className="scrollbar-hide flex gap-2 overflow-x-auto pb-1">
+			<div
+				className={`flex gap-2 overflow-x-auto pb-1 ${isMobile ? 'scrollbar-hide' : 'scrollbar-thin'}`}
+			>
 				{slots.map((slot) => {
 					const pty = slot.PTY?.fcstValue ?? DEFAULT_PTY;
 					const sky = slot.SKY?.fcstValue ?? DEFAULT_SKY;
