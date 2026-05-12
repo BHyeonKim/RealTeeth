@@ -1,0 +1,12 @@
+{
+	"rewrites": [
+		{
+			"source": "/api/:path*",
+			"destination": "https://apihub.kma.go.kr/api/:path*"
+		},
+		{
+			"source": "/(.*)",
+			"destination": "/index.html"
+		}
+	]
+}
