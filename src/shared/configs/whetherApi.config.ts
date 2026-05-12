@@ -5,7 +5,7 @@ const SERVER_URL = import.meta.env
 const SERVICE_KEY = import.meta.env
 	.VITE_KOREA_METEOROLOGICAL_ADMINISTRATION_API_KEY;
 
-if (!SERVER_URL || !SERVICE_KEY) {
+if (!SERVICE_KEY) {
 	throw new Error('환경 변수가 설정되지 않았습니다.');
 }
 
