@@ -18,8 +18,8 @@ const subscribe = (callback: () => void) => {
 	};
 };
 
-const useScreenSize = () => {
+const useDeviceSize = () => {
 	return useSyncExternalStore(subscribe, getScreenSize);
 };
 
-export default useScreenSize;
+export default useDeviceSize;
