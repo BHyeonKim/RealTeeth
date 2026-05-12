@@ -8,6 +8,7 @@ type FavoriteItemListProps = {
 
 const FavoriteItemList = ({ favorites }: FavoriteItemListProps) => {
 	const removeFavorite = useFavoriteStore((state) => state.removeFavorite);
+	const updateAlias = useFavoriteStore((state) => state.updateAlias);
 
 	if (favorites.length === 0) {
 		return (
@@ -24,6 +25,7 @@ const FavoriteItemList = ({ favorites }: FavoriteItemListProps) => {
 					key={`${favorite.name}-${favorite.region}`}
 					{...favorite}
 					onDelete={() => removeFavorite(favorite.name, favorite.region)}
+					onUpdateAlias={(alias) => updateAlias(favorite.name, favorite.region, alias)}
 				/>
 			))}
 		</div>
