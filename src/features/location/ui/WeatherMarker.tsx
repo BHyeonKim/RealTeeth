@@ -36,7 +36,7 @@ const WeatherMarker = ({ name, region, ...gridCoord }: WeatherMarkerProps) => {
 		<button
 			type="button"
 			onClick={handleClick}
-			className="flex h-15 min-w-16 cursor-pointer flex-col items-center justify-center rounded-[10px] border border-yellow-400 bg-white px-2 py-1"
+			className="flex h-15 min-w-max cursor-pointer flex-col items-center justify-center rounded-[10px] border border-yellow-400 bg-white px-2 py-1"
 		>
 			<span className="mb-0.5 font-semibold text-[9px] text-black">{name}</span>
 			<div className="font-bold text-base text-yellow-400 leading-none">
