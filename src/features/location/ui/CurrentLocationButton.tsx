@@ -1,5 +1,5 @@
 import { useMap } from 'react-naver-maps';
-
+import { toast } from 'sonner';
 import { DEFAULT_ZOOM_LEVEL } from '@/features/location/consts/location.const';
 import type { Coordinates } from '@/shared/types/coordinates.type';
 import { CircleButton } from '@/shared/ui/CircleButton';
@@ -29,7 +29,10 @@ const CurrentLocationButton = ({
 	const map = useMap();
 
 	const handleCurrentLocation = () => {
-		if (!coordinates) return;
+		if (!coordinates) {
+			toast.error('위치를 찾을 수 없습니다.');
+			return;
+		}
 
 		map.setCenter(coordinates);
 		map.setZoom(zoomLevel ?? DEFAULT_ZOOM_LEVEL);
