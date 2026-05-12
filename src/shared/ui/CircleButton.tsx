@@ -25,7 +25,7 @@ export const CircleButton = ({
 		<button
 			type="button"
 			className={twMerge(
-				'flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-white',
+				'flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/80 text-gray-600 shadow-lg backdrop-blur-xl',
 				className,
 			)}
 			{...props}

@@ -11,6 +11,9 @@ export const AppLayout = () => {
 					style: {
 						borderRadius: '12px',
 						width: 'fit-content',
+						minWidth: 'max-content',
+						transform: 'translateX(-50%)',
+						left: '50%',
 					},
 				}}
 				visibleToasts={1}
