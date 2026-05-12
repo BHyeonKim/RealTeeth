@@ -1,5 +1,6 @@
-import CloseButton from '@/shared/ui/CloseButton';
+import { motion } from 'motion/react';
 
+import CloseButton from '@/shared/ui/CloseButton';
 import { MAX_FAVORITES } from '../consts/favorite.const';
 import { useFavoriteStore } from '../model/useFavoriteStore';
 import FavoriteItemList from './FavoriteItemList';
@@ -12,7 +13,13 @@ const Favorite = ({ onClose }: FavoriteProps) => {
 	const favorites = useFavoriteStore((state) => state.favorites);
 
 	return (
-		<div className="fixed top-0 left-0 z-20 flex h-full w-80 flex-col border-white/10 border-r bg-black/60 shadow-[8px_0_32px_rgba(0,0,0,0.4)] backdrop-blur-xl">
+		<motion.div
+			initial={{ x: '-100%' }}
+			animate={{ x: 0 }}
+			exit={{ x: '-100%' }}
+			transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+			className="fixed top-0 left-0 z-20 flex h-full w-80 flex-col border-white/10 border-r bg-black/60 shadow-[8px_0_32px_rgba(0,0,0,0.4)] backdrop-blur-xl"
+		>
 			<div className="flex shrink-0 items-center justify-between border-white/10 border-b px-5 py-4">
 				<div className="flex items-center gap-2">
 					<span className="text-base text-violet-300">★</span>
@@ -33,7 +40,7 @@ const Favorite = ({ onClose }: FavoriteProps) => {
 					카드를 클릭하면 날씨 상세를 볼 수 있어요
 				</p>
 			</div>
-		</div>
+		</motion.div>
 	);
 };
 
