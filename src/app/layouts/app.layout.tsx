@@ -3,7 +3,7 @@ import { Toaster } from 'sonner';
 
 export const AppLayout = () => {
 	return (
-		<div className="h-dvh w-full">
+		<div className="h-dvh w-full font-pretendard">
 			<Outlet />
 			<Toaster
 				position="top-center"
