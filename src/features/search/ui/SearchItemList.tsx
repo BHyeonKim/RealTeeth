@@ -8,7 +8,11 @@ type SearchItemListProps = {
 	onItemClick?: () => void;
 };
 
-const SearchItemList = ({ items, className, onItemClick }: SearchItemListProps) => {
+const SearchItemList = ({
+	items,
+	className,
+	onItemClick,
+}: SearchItemListProps) => {
 	return (
 		<ul
 			className={twMerge(
@@ -17,7 +21,11 @@ const SearchItemList = ({ items, className, onItemClick }: SearchItemListProps) 
 			)}
 		>
 			{items.map((item) => (
-				<SearchItem key={`${item.name}-${item.address}`} {...item} onItemClick={onItemClick} />
+				<SearchItem
+					key={`${item.name}-${item.address}`}
+					{...item}
+					onItemClick={onItemClick}
+				/>
 			))}
 		</ul>
 	);

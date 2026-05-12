@@ -1,4 +1,5 @@
-import { Sheet } from 'react-modal-sheet';
+import { useEffect, useRef } from 'react';
+import { Sheet, type SheetRef } from 'react-modal-sheet';
 
 import { MAX_FAVORITES } from '../consts/favorite.const';
 import { useFavoriteStore } from '../model/useFavoriteStore';
@@ -6,12 +7,26 @@ import FavoriteItemList from './FavoriteItemList';
 
 const SNAP_POINTS = [0, 88, 0.55, 1];
 const INITIAL_SNAP = 1;
+const PEEK_SNAP = 1;
 
-const FavoriteBottomSheet = () => {
+type FavoriteBottomSheetProps = {
+	forcePeek?: boolean;
+};
+
+const FavoriteBottomSheet = ({
+	forcePeek = false,
+}: FavoriteBottomSheetProps) => {
+	const sheetRef = useRef<SheetRef>(null);
 	const favorites = useFavoriteStore((state) => state.favorites);
+
+	useEffect(() => {
+		if (!forcePeek) return;
+		sheetRef.current?.snapTo(PEEK_SNAP);
+	}, [forcePeek]);
 
 	return (
 		<Sheet
+			ref={sheetRef}
 			isOpen
 			unstyled
 			onClose={() => undefined}
